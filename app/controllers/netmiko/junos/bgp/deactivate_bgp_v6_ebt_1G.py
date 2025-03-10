@@ -1,5 +1,8 @@
 import os
+from dotenv import load_dotenv
 from netmiko import ConnectHandler
+
+load_dotenv()
 
 
 def deactivate_bgp_v6_ebt_1g(hostname, username, password, group, neighbor):
