@@ -2,7 +2,7 @@ import os
 from netmiko import ConnectHandler
 
 
-def get_interface_configuration(hostname, username, password, unit):
+def get_interface_ae0_config(hostname, username, password, unit):
     router = {
         'device_type': 'juniper',
         'host': hostname,

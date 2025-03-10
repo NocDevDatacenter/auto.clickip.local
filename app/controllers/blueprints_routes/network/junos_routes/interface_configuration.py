@@ -5,7 +5,7 @@ from app.models import Users, Routers
 from cryptography.fernet import Fernet
 from app.controllers.forms import NetworkForm
 from flask import Blueprint, request, render_template, flash
-from app.controllers.netmiko import get_interface_configuration
+from app.controllers.netmiko import get_interface_ae0_config
 from flask_login import current_user, login_required, fresh_login_required
 
 load_dotenv()
@@ -16,8 +16,8 @@ int_conf_bp = Blueprint('int_conf_bp', __name__)
 fernet_key = Fernet(os.getenv('MY_FERNET_KEY'))
 
 
-# Rota: get_interface_configuration
-@int_conf_bp.route('/get_interface_configuration', methods=['GET', 'POST'])
+# Rota: get_interface_ae0_config
+@int_conf_bp.route('/get_interface_ae0_config', methods=['GET', 'POST'])
 @login_required
 @fresh_login_required
 def interface_configuration():
@@ -39,7 +39,7 @@ def interface_configuration():
         password = user_decrypted_password
         unit = request.form.get('unit')
 
-        output = get_interface_configuration(
+        output = get_interface_ae0_config(
             hostname, username, password, unit
         )
 
@@ -52,7 +52,7 @@ def interface_configuration():
                     flash(f"Error in {field}: {error}", category='danger')
 
     return render_template(
-        'junos/get_interface_configuration.html',
+        'junos/get_interface_ae0_config.html',
         form=form,
         output=output,
         devices=devices,
