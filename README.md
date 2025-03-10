@@ -23,7 +23,7 @@ Bem-vindo ao repositório do **Auto ClickIP Local**! Este projeto tem como objet
 
 ### 1️⃣ Clonar o Repositório
 ```bash
-git clone https://github.com/seu-usuario/auto-clickip-local.git
+https://github.com/NocDevDatacenter/auto.clickip.local.git
 cd auto-clickip-local
 ```
 
