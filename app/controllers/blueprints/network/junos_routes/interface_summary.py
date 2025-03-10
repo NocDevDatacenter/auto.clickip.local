@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from app.models import Users, Routers
 from cryptography.fernet import Fernet
 from app.controllers.forms import NetworkForm
-from app.controllers.netmiko import get_interface_summary
+from app.controllers.netmiko import get_interface_ae0_summary
 from flask import Blueprint, request, render_template, flash
 from flask_login import current_user, login_required, fresh_login_required
 
@@ -16,8 +16,8 @@ int_summary_bp = Blueprint('int_summary_bp', __name__)
 fernet_key = Fernet(os.getenv('MY_FERNET_KEY'))
 
 
-# Rota: get_interface_summary
-@int_summary_bp.route('/get_interface_summary', methods=['GET', 'POST'])
+# Rota: get_interface_ae0_summary
+@int_summary_bp.route('/get_interface_ae0_summary', methods=['GET', 'POST'])
 @login_required
 @fresh_login_required
 def interface_summary():
@@ -38,7 +38,7 @@ def interface_summary():
         logged_username = current_user.username
         user_password = user_decrypted_password
 
-        output = get_interface_summary(
+        output = get_interface_ae0_summary(
             selected_hostname,
             logged_username,
             user_password,
@@ -53,7 +53,7 @@ def interface_summary():
                     flash(f"Error in {field}: {error}", category='danger')
 
     return render_template(
-        'junos/get_interface_summary.html',
+        'junos/get_interface_ae0_summary.html',
         form=form,
         output=output,
         devices=devices,
