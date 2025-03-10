@@ -42,7 +42,7 @@ def create_app():
     lm.needs_refresh_message_category = "info"  # Category of the reauthentication message
 
     # Blueprint registration
-    from app.controllers.blueprints import register_blueprints
+    from app.controllers.blueprints_routes import register_blueprints
     register_blueprints(app)  # Registers all configured blueprints
 
     with app.app_context():
