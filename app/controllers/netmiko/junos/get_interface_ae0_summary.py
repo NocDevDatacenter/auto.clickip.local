@@ -3,7 +3,7 @@ from netmiko import ConnectHandler
 
 
 # Retrieves the interface summary from a Juniper device
-def get_interface_summary(hostname, username, password):
+def get_interface_ae0_summary(hostname, username, password):
     router = {
         'device_type': 'juniper',  # Specifies the device type as Juniper
         'host': hostname,  # Hostname or IP address of the target device
