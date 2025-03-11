@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1 class="display-4">{% block title %}BGP Manager</h1>
+{% endblock %}
+
+{% block comment %}
+{{ super()}}
+{% endblock %}
+
+<hr>
+
+<form method="POST" action="{{ url_for('int_dhcp_bp.set_access_address_assignment_page') }}" autocomplete="on">
+    {{ form.hidden_tag() }}
+
+    <div class="form-row">
+        <div class="form-group col-2">{{ form.hostname(class="form-control") }}</div>
+        <div class="form-group col-2">{{ form.action(class="form-control") }}</div>
+        <div class="form-group col-3">{{ form.group(class="form-control") }}</div>
+        <div class="form-group col">{{ form.neighbor(class="form-control") }}</div>
+    </div>
+
+    <div class="form-row"><!-- USER AND PASS PLACEBO-->
+        <div class="form-group col mb-3"> <!-- Username -->
+            <input type="text" class="form-control" value="{{ current_user.username }}" readonly>
+        </div>
+
+        <div class="input-group col mb-3"><!-- Passwords -->
+            <input type="password" class="form-control" id="password-input" value="{{ current_user.password[:12] }}"
+                readonly>
+            <div class="input-group-append">
+                <i class="fas fa-eye input-group-text" id="toggle-password"></i>
+            </div>
+        </div>
+    </div>
+
+    {{ form.submit(class="btn btn-primary") }}
+
+</form>
+
+<br>
+
+<pre class="text-center">set access address-assignment pool {pool_name}</pre>
+
+<pre class="max-height" style=" border: solid 1px rgba(0, 0, 0, .1); 
+                                    padding: 1rem; 
+                                    margin-top: 1rem; 
+                                    border-radius: 10px;">{{ output }}</pre>
+{% endblock %}
