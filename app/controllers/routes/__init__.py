@@ -1,5 +1,5 @@
 from flask import Flask
-from .auth_routes.auth import auth_bp
+from .auth.auth import auth_bp
 from .network.junos_routes.interface_unit import int_unit_bp
 from .network.junos_routes.interface_dhcp import int_dhcp_bp
 from .network.dmos_routes.downstream_fec import downstream_fec_bp
