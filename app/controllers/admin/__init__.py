@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 from cryptography.fernet import Fernet
 from flask_admin.contrib.sqla import ModelView
 from wtforms import StringField, PasswordField
-from app.models import Users, Routers, Switches, Olts, BgpNeighbor
 from wtforms.validators import DataRequired, Length, EqualTo, IPAddress, InputRequired
+from app.models import Users, Routers, Switches, Olts, NeighborBgpIpv4, NeighborBgpIpv6
 
 load_dotenv()
 
@@ -133,6 +133,31 @@ class BgpNeighborView(ModelView):
     edit_modal = True
     details_modal = True
 
+    column_default_sort = 'description'
+
+    form_extra_fields = {
+        'neighbor': StringField(
+            'Neighbor', validators=[
+                InputRequired(),
+                IPAddress(ipv4=True, ipv6=True)
+            ]
+        ),
+    }
+
+
+class BgpNeighborIpv4View(ModelView):
+    can_edit = True
+    can_delete = False
+    can_create = True
+    can_export = True
+    can_view_details = True
+    can_set_page_size = True
+
+    edit_modal = True
+    details_modal = True
+
+    column_default_sort = 'description'
+
     form_extra_fields = {
         'neighbor': StringField(
             'Neighbor', validators=[
@@ -149,4 +174,5 @@ def flask_admin():
     admin.add_view(DeviceView(Routers, db.session))
     admin.add_view(SwitchView(Switches, db.session))
     admin.add_view(OltView(Olts, db.session))
-    admin.add_view(BgpNeighborView(BgpNeighbor, db.session))
+    admin.add_view(BgpNeighborView(NeighborBgpIpv4, db.session))
+    admin.add_view(BgpNeighborIpv4View(NeighborBgpIpv6, db.session))

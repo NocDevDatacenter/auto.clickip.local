@@ -18,7 +18,8 @@ class BgpManagerSessionForm(FlaskForm):
         'Group', choices=[
             ('Sessoes_Transito_IPv4', 'Sessoes_Transito_IPv4'),
             ('Sessoes_Transito_IPv6', 'Sessoes_Transito_IPv6'),
-        ]
+        ],
+        default='Sessoes_Transito_IPv6'
     )
 
     neighbor = SelectField(
