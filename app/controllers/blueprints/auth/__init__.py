@@ -19,7 +19,7 @@ def check_password(stored_password, provided_password):
         decrypted_password = fernet_key.decrypt(stored_password).decode('utf-8')
         return decrypted_password == provided_password
     except Exception as e:
-        print(f'[Erro] Falha ao verificar a senha: {e}')
+        print(f'[Erro] Fail, verify your password: {e}')
         return False
 
 
@@ -46,7 +46,7 @@ def login():
         for field_name, error_messages in login_form.errors.items():
             for error_message in error_messages:
                 flash(f'Error in {field_name}: {error_message}', category='danger')
-    return render_template('login.html', form=login_form)
+    return render_template('accounts/login.html', form=login_form)
 
 
 @auth_bp.route('/logout')
