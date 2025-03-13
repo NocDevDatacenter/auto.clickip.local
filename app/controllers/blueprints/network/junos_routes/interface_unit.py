@@ -61,7 +61,7 @@ def interface_unit():
                     flash(f"Error in {field}: {error}", category='danger')
 
     return render_template(
-        'junos/set_interface_unit.html',
+        'network/junos/set_interface_unit.html',
         form=form,
         output=output,
     )

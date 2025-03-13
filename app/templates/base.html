@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  {% include 'includes/head.html' %}
+</head>
+
+<body class="container">
+  {% include 'includes/navigation.html' %}
+
+  <div class="jumbotron" style="box-shadow: 0 .5rem .5rem  lightgray;">
+
+    {% include "includes/flash_messages.html" %}
+
+    {% block content %}
+
+    data
+
+    {% block comment %}
+    <p class="lead">
+      Aplicação Flask para automatizar configurações de rede, integrando validação
+      de endereços IPv4/IPv6, autenticação de usuários e registro de dispositivos,
+      com suporte a Netmiko para execução de comandos SSH.
+    </p>
+    {% endblock comment %}
+
+    {% endblock content %}
+
+  </div>
+
+  {% include 'includes/footer.html' %}
+
+  {% include 'includes/scripts.html' %}
+</body>
+
+</html>

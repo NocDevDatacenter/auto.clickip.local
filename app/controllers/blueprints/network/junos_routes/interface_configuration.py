@@ -52,7 +52,7 @@ def interface_configuration():
                     flash(f"Error in {field}: {error}", category='danger')
 
     return render_template(
-        'junos/get_interface_ae0_config.html',
+        'network/junos/get_interface_ae0_config.html',
         form=form,
         output=output,
         devices=devices,

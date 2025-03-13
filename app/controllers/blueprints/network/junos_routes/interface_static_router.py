@@ -49,7 +49,7 @@ def set_static_route_page():
                     flash(f"Error in {field}: {error}", category='danger')
 
     return render_template(
-        'junos/set_static_route.html',
+        'network/junos/set_static_route.html',
         form=form,
         output=output,
         devices=devices,

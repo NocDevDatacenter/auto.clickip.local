@@ -1,32 +1,50 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 
 {% block content %}
-<h1 class="display-4">{% block title %}MPLS Seg - 1{% endblock %}</h1>
+<h1 class="display-4">{% block title %}Access Address Assignment</h1>
+{% endblock %}
 
 {% block comment %}
-{{ super() }}
+{{ super()}}
 {% endblock %}
+
 <hr>
 
-<form method="POST" action="{{url_for('network.interface_configuration')}}" autocomplete="on">
+<form method="POST" action="{{ url_for('int_dhcp_bp.set_access_address_assignment_page') }}" autocomplete="on">
+    {{ form.hidden_tag() }}
+
+    <!-- ROW -->
     <div class="form-row">
-        <!-- Routers -->
         <div class="form-group col">
             <select name="hostname" id="hostname" class="form-control">
                 {% for device in devices %}
-                <option value="{{device.ip_address}}">{{device.hostname}}</option>
+                <option value="{{ device.ip_address }}">{{ device.hostname }}</option>
                 {% endfor %}
             </select>
         </div>
+    </div>
 
-        <!-- Unit/Vlan -->
+    <!-- ROW -->
+    <div class="form-row">
+        <!-- network destination -->
+        <div class="form-group col-2">
+            {{ form.vlan(class="form-control", placeholder="Interface vlan") }}
+        </div>
+
+        <!-- prefix dest -->
         <div class="form-group col">
-            <input type="number" class="form-control" name="unit" id="unit" placeholder="Unit Vlan" required>
+            {{ form.network(class="form-control", placeholder="Network in CIDR format, Ex: 192.168.0.1/24") }}
+        </div>
+
+        <!-- next hop -->
+        <div class="form-group col">
+            {{ form.description(class="form-control", placeholder="Pool name") }}
         </div>
     </div>
 
+    <!-- USER AND PASS PLACEBO-->
     <div class="form-row">
-        <!-- Usuários -->
+        <!-- Username -->
         <div class="form-group col mb-3">
             <input type="text" class="form-control" value="{{ current_user.username }}" readonly>
         </div>
@@ -46,7 +64,7 @@
 
 <br>
 
-<pre class="text-center"> show configuration interfaces ae0 unit {unit} </pre>
+<pre class="text-center">set access address-assignment pool {pool_name}</pre>
 
 <pre class="max-height" style=" border: solid 1px rgba(0, 0, 0, .1); 
                                     padding: 1rem; 

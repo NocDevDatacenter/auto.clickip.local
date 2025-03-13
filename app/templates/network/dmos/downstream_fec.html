@@ -1,29 +1,25 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 
 {% block content %}
-<h1 class="display-4">{% block title %}MPLS Seg - 1{% endblock %}</h1>
+<h1 class="display-4">{% block title %}Downstream-fec{% endblock %}</h1>
 
 {% block comment %}
 {{ super() }}
 {% endblock %}
 <hr>
 
-<form method="POST" action="{{url_for('network.interface_configuration')}}" autocomplete="on">
-    <div class="form-row">
-        <!-- Routers -->
-        <div class="form-group col">
-            <select name="hostname" id="hostname" class="form-control">
-                {% for device in devices %}
-                <option value="{{device.ip_address}}">{{device.hostname}}</option>
-                {% endfor %}
-            </select>
-        </div>
+<form method="POST" action="#" autocomplete="on">
+    {{ form.hidden_tag() }}
 
-        <!-- Unit/Vlan -->
-        <div class="form-group col">
-            <input type="number" class="form-control" name="unit" id="unit" placeholder="Unit Vlan" required>
-        </div>
+    <!-- ROW OF THE HOSTNAME -->
+    <div class="form-row">
+        <div class="form-group col">{{ form.hostname(class="form-control") }}</div>
+        <div class="form-group col-.5">{{ form.chassis(class="form-control") }}</div>
+        <div class="form-group col-.5">{{ form.slot(class="form-control") }}</div>
+        <div class="form-group col-.5">{{ form.port_id(class="form-control") }}</div>
+        <div class="form-group col">{{ form.dmos_command(class="form-control") }}</div>
     </div>
+
 
     <div class="form-row">
         <!-- Usuários -->
@@ -41,12 +37,14 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Enviar</button>
+    <div class="form-row">
+        <div class="form-group col">{{ form.submit(class="btn btn-primary") }}</div>
+    </div>
 </form>
 
 <br>
 
-<pre class="text-center"> show configuration interfaces ae0 unit {unit} </pre>
+<pre class="text-center"> show interface gpon {chassis}/{slot}/{port_id} </pre>
 
 <pre class="max-height" style=" border: solid 1px rgba(0, 0, 0, .1); 
                                     padding: 1rem; 
