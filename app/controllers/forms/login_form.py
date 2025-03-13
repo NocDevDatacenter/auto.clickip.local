@@ -5,19 +5,21 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField
 
 class LoginForm(FlaskForm):
     username = StringField(
-        'Username',
-        validators=[
+        'Username', validators=[
             DataRequired(),
-            Length(max=30)
-        ])
+            Length(max=30),
+        ]
+    )
+
     password = PasswordField(
-        'Password',
-        validators=[
+        'Password', validators=[
             DataRequired(),
-            Length(max=30)
-        ])
+            Length(max=30),
+        ]
+    )
+
     checkbox = BooleanField(
-        'Remember me!',
-        default=True
-        )
+        'Remember me!', default=True
+    )
+
     submit = SubmitField('Entrar')
