@@ -78,3 +78,21 @@ flask db upgrade
 ## 📝 Licença
 Este projeto está sob a licença MIT. Sinta-se livre para usar e modificar! 🎉
 
+## TESTE ##
+
+1 - aplicação configurada (padrão github)
+2 - wsgi (web server gateway interface) = gunicorn (https://flask.palletsprojects.com/en/stable/deploying/)
+3 - servidor web (nginx / apache2)
+4 proxy reverso (nginx): server {
+    listen 80;
+    server_name _;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000/;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Prefix /;
+    }
+}
+
