@@ -83,7 +83,9 @@ Este projeto está sob a licença MIT. Sinta-se livre para usar e modificar! �
 1 - aplicação configurada (padrão github)
 2 - wsgi (web server gateway interface) = gunicorn (https://flask.palletsprojects.com/en/stable/deploying/)
 3 - servidor web (nginx / apache2)
-4 proxy reverso (nginx): server {
+4 proxy reverso (nginx): 
+
+server {
     listen 80;
     server_name _;
 
