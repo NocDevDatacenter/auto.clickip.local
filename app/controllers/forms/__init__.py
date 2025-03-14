@@ -1,4 +1,4 @@
-from .login_form import LoginForm
+from .auth_form import LoginForm
 from .network_form import NetworkForm
 from .set_static_route_form import StaticRouteForm
 from .downstream_fec_form import Downstream_fec_form
