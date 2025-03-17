@@ -9,20 +9,31 @@
     .dev {
         height: 100vh;
 
-        .dev-border {
-            border-radius: .5rem;
-        }
+    }
+
+    .dev-border {
+        border-radius: .5rem;
+    }
+
+    .border-red {
+        border: 1px solid red;
     }
 </style>
 
 <body>
 
     <div class="dev d-flex justify-content-center align-items-center bg-light">
+        <div class="fixed-top">
+            {% include "includes/flash_messages.html" %}
+        </div>
 
         <div class="dev-border border border-primary shadow p-5 bg-white">
 
             <h1 class="h3 text-center mb-4">Create Account</h1>
-            <form action="#" method="post" autocomplete="on">
+
+            <!-- form register -->
+            <form action="{{ url_for('auth_bp.register') }}" method="post" autocomplete="on">
+                {{ form.hidden_tag() }}
 
                 <!-- username -->
                 <label>Your user</label>
@@ -32,7 +43,7 @@
                             <i class="fas fa-user"></i>
                         </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Your user">
+                    {{ form.username(class="form-control", placeholder="Your user")}}
                 </div>
 
                 <!-- password -->
@@ -43,7 +54,7 @@
                             <i class="fas fa-lock"></i>
                         </div>
                     </div>
-                    <input type="password" class="form-control" placeholder="Your password">
+                    {{ form.password(class="form-control", placeholder="Your password")}}
                 </div>
 
                 <!-- confirm password -->
@@ -54,14 +65,17 @@
                             <i class="fas fa-unlock"></i>
                         </div>
                     </div>
-                    <input type="password" class="form-control" placeholder="Confirm password">
+                    {{ form.confirm_password(class="form-control", placeholder="Confirm password")}}
                 </div>
 
-                <!-- checkbox -->
-                <input type="checkbox" class="mb-4">
-                <p class="d-inline ml-1">I agree to the terms and conditions</p>
+                <!-- Checkbox -->
+                <div class="form-check mb-4">
+                    <label class="form-check-label">
+                        {{ form.checkbox(class='form-check-input') }} I agree to the terms and conditions
+                    </label>
+                </div>
 
-                <input type="submit" class="d-block btn btn-primary mb-4" style="width: 100%;">
+                {{ form.submit(class="d-block btn btn-primary mb-4", style="width: 100%;")}}
 
             </form>
 
