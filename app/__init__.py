@@ -1,11 +1,18 @@
-from flask_admin import Admin
+from flask_admin import Admin, AdminIndexView
+from livereload import Server  # noqa: F401
 from flask_migrate import Migrate
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, render_template
 from sqlalchemy.orm import DeclarativeBase
+import importlib
 
+#def run_unauthorizedadmin2():
+   # call (["python", "unauthorizedadmin.py"])
 
+#run_unauthorizedadmin2()
+    
+    
 # Declarative base class for SQLAlchemy
 # This class serves as the base for all SQLAlchemy models, enabling table creation in the database.
 class Base(DeclarativeBase):
@@ -15,8 +22,26 @@ class Base(DeclarativeBase):
 # Initializing Flask extensions
 db = SQLAlchemy(model_class=Base)  # Manages database interactions
 lm = LoginManager()                # Manages user sessions and authentication
-admin = Admin()                    # Administrative interface for managing the application
 migrate = Migrate()                # Manages database migrations
+
+
+
+#unauthorizedadmin = importlib.import_module("unauthorizedadmin.py")
+
+ #Custom admin index view to restrict access
+class SecureAdminIndexView(AdminIndexView):
+    def is_accessible(self):
+       """Allow access only to authenticated users."""
+       return current_user.is_authenticated
+
+    def inaccessible_callback(self, name, **kwargs):
+        """Redirect to login page if user is not authenticated."""
+        return render_template("admin/admin_access_error.html")
+
+
+#Flask-Admin instance with secured access
+
+admin = Admin(index_view=SecureAdminIndexView())
 
 
 def create_app():
