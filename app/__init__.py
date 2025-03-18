@@ -30,12 +30,12 @@ def create_app():
     migrate.init_app(app, db)  # Sets up database migration
 
     # Login configurations
-    lm.login_view = 'auth.login'  # Defines the default login route
+    lm.login_view = 'auth_bp.login'  # Defines the default login route
     lm.login_message = 'Please log in to access this page.'  # Message displayed when accessing a protected page without logging in
     lm.login_message_category = 'info'  # Category of the login message
     lm.session_protection = "strong"  # Level of session protection
 
-    lm.refresh_view = "auth.login"  # Route for reauthentication
+    lm.refresh_view = "auth_bp.login"  # Route for reauthentication
     lm.needs_refresh_message = (
         u"To protect your account, please reauthenticate to access this page."
     )  # Message displayed when reauthentication is needed
