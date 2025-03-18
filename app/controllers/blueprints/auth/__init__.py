@@ -9,7 +9,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash
 
 load_dotenv()
 
-auth_bp = Blueprint('auth', __name__)
+auth_bp = Blueprint('auth_bp', __name__)
 fernet_key = Fernet(os.getenv('MY_FERNET_KEY'))
 
 
@@ -72,4 +72,4 @@ def register():
 def logout():
     logout_user()
     flash('Login out!!!', category='info')
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('auth_bp.login'))
