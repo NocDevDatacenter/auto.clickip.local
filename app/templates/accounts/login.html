@@ -1,35 +1,74 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="pt-br">
 
-{% block content %}
-<h1 class="display-4">{% block title %}Login{% endblock %}</h1>
+<head>
+    {% include 'includes/head.html' %}
+</head>
 
-{% block comment %}
-{{ super() }}
-{% endblock %}
+<style>
+    /* this block is a trivial config, will changed in future */
+    .dev {
+        height: 100vh;
 
-<hr>
-<form method="POST" action="{{url_for('auth_bp.login')}}" autocomplete="on">
-    {{ form.hidden_tag() }}
+    }
 
-    <div class="form-group">
-        {{ form.username(class="form-control mb-3", placeholder='user.name') }}
+    .dev-border {
+        border-radius: .5rem;
+    }
 
-        <div class="input-group">
-            {{ form.password(class="form-control", placeholder='password', id='password-input') }}
-            <div class="input-group-append">
-                <i class="fas fa-eye input-group-text" id="toggle-password"></i>
-            </div>
+    .dev-border-red {
+        border: 1px solid red;
+    }
+</style>
+
+<body>
+
+    <div class="dev d-flex justify-content-center align-items-center bg-light">
+
+        <div class="dev-border border border-primary shadow p-5 bg-white">
+
+            <h1 class="h3 text-center mb-4">Sign in</h1>
+            <form action="{{ url_for('auth_bp.login') }}" method="post" autocomplete="on">
+                {{ form.hidden_tag() }}
+
+                <!-- username -->
+                <label>Your user</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    {{ form.username(class="form-control", placeholder="Your user") }}
+                </div>
+
+                <!-- password -->
+                <label class="bold">Your password</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {{ form.password(class="form-control", placeholder="Your password") }}
+                </div>
+
+                <!-- checkbox -->
+                {{ form.checkbox(class="mb-4") }}
+                <p class="d-inline ml-1">I agree to the terms and conditions</p>
+
+                <!-- submit -->
+                {{ form.submit(class="d-block btn btn-primary mb-4", style="width: 100%;") }}
+
+            </form>
+
+            <p class="text-center">Not registered? <a href="{{ url_for('auth_bp.register') }}">Create account</a></p>
+
         </div>
     </div>
 
+    {% include 'includes/scripts.html' %}
 
-    <div class="d-flex justify-content-between align-items-center">
-        {{ form.submit(class='btn btn-primary') }}
-        <div class="custom-control custom-checkbox">
-            {{ form.checkbox(class="custom-control-input") }}
-            {{ form.checkbox.label(class="custom-control-label") }}
-        </div>
-    </div>
-</form>
+</body>
 
-{% endblock %}
+</html>
