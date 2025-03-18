@@ -24,11 +24,15 @@
 <body>
 
     <div class="dev d-flex justify-content-center align-items-center bg-light">
+        <div class="fixed-top">
+            {% include "includes/flash_messages.html" %}
+        </div>
 
         <div class="dev-border border border-primary shadow p-5 bg-white">
 
             <h1 class="h3 text-center mb-4">Create Account</h1>
-            <form action="#" method="post" autocomplete="on">
+            <form action="{{ url_for('auth_bp.register') }}" method="post" autocomplete="on">
+                {{ form.hidden_tag() }}
 
                 <!-- username -->
                 <label>Your user</label>
@@ -67,6 +71,7 @@
                 {{ form.checkbox(class="mb-4") }}
                 <p class="d-inline ml-1">I agree to the terms and conditions</p>
 
+                <!-- submit -->
                 {{ form.submit(class="d-block btn btn-primary mb-4", style="width: 100%;") }}
 
             </form>
@@ -75,10 +80,8 @@
 
         </div>
     </div>
-</body>
 
-
-{% include 'includes/scripts.html' %}
+    {% include 'includes/scripts.html' %}
 
 </body>
 
