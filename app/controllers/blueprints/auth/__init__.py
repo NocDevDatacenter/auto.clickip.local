@@ -22,23 +22,6 @@ def check_password(stored_password, provided_password):
         return False
 
 
-@auth_bp.route('/register', methods=['GET', 'POST'])
-def register():
-    form = RegisterForm()
-
-    if form.validate_on_submit():
-        pass  # Register user
-
-    if form.errors:
-        for field_name, error_messages in form.errors.items():
-            for error_message in error_messages:
-                flash(f'Error in {field_name}: {error_message}', category='danger')
-
-    return render_template(
-        'accounts/register.html',
-        form=form)
-
-
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -64,6 +47,23 @@ def login():
 
     return render_template(
         'accounts/login.html',
+        form=form)
+
+
+@auth_bp.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
+
+    if form.validate_on_submit():
+        pass  # Register user
+
+    if form.errors:
+        for field_name, error_messages in form.errors.items():
+            for error_message in error_messages:
+                flash(f'Error in {field_name}: {error_message}', category='danger')
+
+    return render_template(
+        'accounts/register.html',
         form=form)
 
 
