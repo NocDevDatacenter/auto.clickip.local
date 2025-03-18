@@ -5,13 +5,19 @@
     {% include 'includes/head.html' %}
 </head>
 
-<style>
+<style> 
+    /* this block is a trivial config, will changed in future */
     .dev {
         height: 100vh;
-
-        .dev-border {
-            border-radius: .5rem;
-        }
+        
+    }
+    
+    .dev-border {
+        border-radius: .5rem;
+    }
+    
+    .dev-border-red {
+        border: 1px solid red;
     }
 </style>
 
@@ -32,7 +38,7 @@
                             <i class="fas fa-user"></i>
                         </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Your user">
+                    {{ form.username(class="form-control", placeholder="Your user") }}
                 </div>
 
                 <!-- password -->
@@ -43,7 +49,7 @@
                             <i class="fas fa-lock"></i>
                         </div>
                     </div>
-                    <input type="password" class="form-control" placeholder="Your password">
+                    {{ form.password(class="form-control", placeholder="Your password") }}
                 </div>
 
                 <!-- confirm password -->
@@ -54,14 +60,14 @@
                             <i class="fas fa-unlock"></i>
                         </div>
                     </div>
-                    <input type="password" class="form-control" placeholder="Confirm password">
+                    {{ form.confirm_password(class="form-control", placeholder="Confirm password") }}
                 </div>
 
                 <!-- checkbox -->
-                <input type="checkbox" class="mb-4">
+                {{ form.checkbox(class="mb-4") }}
                 <p class="d-inline ml-1">I agree to the terms and conditions</p>
 
-                <input type="submit" class="d-block btn btn-primary mb-4" style="width: 100%;">
+                {{ form.submit(class="d-block btn btn-primary mb-4", style="width: 100%;") }}
 
             </form>
 
