@@ -1,46 +1,51 @@
 <div class="d-flex justify-content-between">
 
-    <!-- Left Side Menu -->
-    <nav aria-label="breadcrumb">
-      <ul class="breadcrumb">
+  <!-- Left Side Menu -->
+  <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
 
-        <li class="breadcrumb-item">
-          <a href="{{ url_for('page_home') }}">Home</a>
-        </li>
-
-        {% if current_user.is_authenticated %}
-        <li class="dropdown ml-3">
-          <a href="#" class="dropdown-toggle mr-3" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Routers</a>
-          <div class="dropdown-menu">
-            <a href="{{ url_for('int_summary_bp.interface_summary') }}"               class="dropdown-item">Interface Summary</a>
-            <a href="{{ url_for('int_conf_bp.interface_configuration') }}"            class="dropdown-item">Interface Configuration</a>
-            <a href="{{ url_for('int_unit_bp.interface_unit') }}"                     class="dropdown-item">Config Interface Unit Vlan</a>
-            <a href="{{ url_for('int_static_route_bp.set_static_route_page') }}"      class="dropdown-item">Config Static Router</a>
-            <a href="{{ url_for('int_dhcp_bp.set_access_address_assignment_page') }}" class="dropdown-item">Access Address Assignment</a>
-            <a href="{{ url_for('bgp_manager_session_bp.bgp_manager_session') }}"     class="dropdown-item">BGP Manager Session</a>
-          </div>
-        </li>
-        
-        <li class="breadcrumb-item">
-          <a href="{{url_for('downstream_fec_bp.downstream_fec')}}">Olts</a>
-        </li>
-        {% endif %}
-
-      </ul>
-    </nav>
-
-    <!-- Right Side Menu -->
-    <nav class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{{ url_for('page_home') }}">Home</a>
+      </li>
 
       {% if current_user.is_authenticated %}
-      <span class="mr-3 text-uppercase font-weight-light">&#8764; {{ current_user.username }} &#8764;</span>
-      <a class="breadcrumb-item" href="/admin">Admin</a>
-      <a class="breadcrumb-item" href="{{ url_for('auth.logout') }}">Logout</a>
+      <li class="dropdown ml-3">
+        <a href="#" class="dropdown-toggle mr-3" type="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">Routers</a>
+        <div class="dropdown-menu">
+          <a href="{{ url_for('int_summary_bp.interface_summary') }}" class="dropdown-item">Interface Summary</a>
+          <a href="{{ url_for('int_conf_bp.interface_configuration') }}" class="dropdown-item">Interface
+            Configuration</a>
+          <a href="{{ url_for('int_unit_bp.interface_unit') }}" class="dropdown-item">Config Interface Unit Vlan</a>
+          <a href="{{ url_for('int_static_route_bp.set_static_route_page') }}" class="dropdown-item">Config Static
+            Router</a>
+          <a href="{{ url_for('int_dhcp_bp.set_access_address_assignment_page') }}" class="dropdown-item">Access Address
+            Assignment</a>
+          <a href="{{ url_for('bgp_manager_session_bp.bgp_manager_session') }}" class="dropdown-item">BGP Manager
+            Session</a>
+        </div>
+      </li>
 
-      {% else %}
-      <a class="breadcrumb-item" href="{{ url_for('auth.login') }}">Login</a>
-
+      <li class="breadcrumb-item">
+        <a href="{{url_for('downstream_fec_bp.downstream_fec')}}">Olts</a>
+      </li>
       {% endif %}
-    </nav>
 
-  </div>
+    </ul>
+  </nav>
+
+  <!-- Right Side Menu -->
+  <nav class="breadcrumb">
+
+    {% if current_user.is_authenticated %}
+    <span class="mr-3 text-uppercase font-weight-light">&#8764; {{ current_user.username }} &#8764;</span>
+    <a class="breadcrumb-item" href="/admin">Admin</a>
+    <a class="breadcrumb-item" href="{{ url_for('auth_bp.logout') }}">Logout</a>
+
+    {% else %}
+    <a class="breadcrumb-item" href="{{ url_for('auth_bp.login') }}">Login</a>
+
+    {% endif %}
+  </nav>
+
+</div>
