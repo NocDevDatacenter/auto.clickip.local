@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Define the database file name
-DATABASE_FILE = "app.db"
+DATABASE_FILE = "nexus.database"
 
 # Set the SQLAlchemy database URI using SQLite
 SQLALCHEMY_DATABASE_URI = "sqlite:///" + DATABASE_FILE
