@@ -43,9 +43,6 @@ Crie um arquivo **.env** na raiz do projeto e defina suas credenciais:
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=admin123
 DEVICE_TYPE=juniper
-HOSTNAME=192.168.1.1
-USERNAME=meu_usuario
-PASSWORD=minha_senha
 PORT=22
 ```
 
