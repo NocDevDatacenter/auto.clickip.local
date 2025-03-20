@@ -11,7 +11,8 @@ class BgpManagerSessionForm(FlaskForm):
         'Action', choices=[
             ('activate', 'activate'),
             ('deactivate', 'deactivate'),
-        ]
+        ],
+        default='deactivate'
     )
 
     group = SelectField(
