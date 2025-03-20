@@ -32,24 +32,20 @@
                 {{ form.hidden_tag() }}
 
                 <!-- username -->
-                <label>Your user</label>
+                {{ form.username.label }}
                 <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <i class="fas fa-user"></i>
-                        </div>
-                    </div>
+                    <span class="input-group-text">
+                        <i class="fas fa-user"></i>
+                    </span>
                     {{ form.username(class="form-control", placeholder="Your user") }}
                 </div>
 
                 <!-- password -->
-                <label class="bold">Your password</label>
+                {{ form.password.label }}
                 <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <i class="fas fa-lock"></i>
-                        </div>
-                    </div>
+                    <span class="input-group-text">
+                        <i class="fas fa-lock"></i>
+                    </span>
                     {{ form.password(class="form-control", placeholder="Your password") }}
                 </div>
 

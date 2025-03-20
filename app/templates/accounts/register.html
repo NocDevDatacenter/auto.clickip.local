@@ -34,33 +34,27 @@
                 <!-- username -->
                 <label>Your user</label>
                 <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <i class="fas fa-user"></i>
-                        </div>
-                    </div>
+                    <span class="input-group-text">
+                        <i class="fas fa-user"></i>
+                    </span>
                     {{ form.username(class="form-control", placeholder="Your user") }}
                 </div>
 
                 <!-- password -->
                 <label class="bold">Your password</label>
                 <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <i class="fas fa-lock"></i>
-                        </div>
-                    </div>
+                    <span class="input-group-text">
+                        <i class="fas fa-lock"></i>
+                    </span>
                     {{ form.password(class="form-control", placeholder="Your password") }}
                 </div>
 
                 <!-- confirm password -->
                 <label class="bold">Confirm password</label>
                 <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <i class="fas fa-unlock"></i>
-                        </div>
-                    </div>
+                    <span class="input-group-text">
+                        <i class="fas fa-unlock"></i>
+                    </span>
                     {{ form.confirm_password(class="form-control", placeholder="Confirm password") }}
                 </div>
 
