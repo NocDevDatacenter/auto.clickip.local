@@ -5,7 +5,7 @@ from netmiko import ConnectHandler
 load_dotenv()
 
 
-def bgp_manager_session(hostname, username, password, action, group, neighbor):
+def bgp_manager(hostname, username, password, action, group, neighbor):
 
     router = {
         'device_type': 'juniper',

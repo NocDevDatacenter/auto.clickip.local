@@ -2,7 +2,7 @@ import os
 from app import db
 from dotenv import load_dotenv
 from cryptography.fernet import Fernet
-from app.controllers.forms import BgpManagerSessionForm
+from app.controllers.forms.bgp_manager import BgpManagerForm
 from app.models import Routers, NeighborBgpIpv4, NeighborBgpIpv6
 from flask import Blueprint, request, render_template, flash, jsonify
 from flask_login import current_user, login_required, fresh_login_required
@@ -15,11 +15,11 @@ fernet_key = Fernet(os.getenv('MY_FERNET_KEY'))
 
 
 # Rota: bgp_manager_bp
-@bgp_manager_bp.route('/bgp_manager_session', methods=['GET', 'POST'])
+@bgp_manager_bp.route('/bgp_manager', methods=['GET', 'POST'])
 @login_required
 @fresh_login_required
-def bgp_manager_session():
-    form = BgpManagerSessionForm()
+def bgp_manager():
+    form = BgpManagerForm()
     hosts = db.session.execute(db.select(Routers).order_by(Routers.id)).scalars().all()
     form.hostname.choices = [(host.ip_address, host.hostname) for host in hosts]
     current_user_decrypted_password = fernet_key.decrypt(current_user.password).decode('utf-8')
@@ -28,16 +28,18 @@ def bgp_manager_session():
 
     if form.validate_on_submit():
 
-        hostname = form.hostname.data
-        username = current_user.username
-        password = current_user_decrypted_password
-        action = form.action.data
-        group = form.group.data
-        neighbor = form.neighbor.data
+        if form.group.data == 'Sessoes_Transito_IPv4':
+            neighbors = db.session.execute(db.select(NeighborBgpIpv4).order_by(NeighborBgpIpv4.id)).scalars().all()
+        else:
+            neighbors = db.session.execute(db.select(NeighborBgpIpv6).order_by(NeighborBgpIpv6.id)).scalars().all()
 
-        output = bgp_manager_session(
-            hostname, username, password,
-            action, group, neighbor
+        output = bgp_manager(
+            hostname=form.hostname.data,
+            username=current_user.username,
+            password=current_user_decrypted_password,
+            action=form.action.data,
+            group=form.group.data,
+            neighbor=neighbors
         )
 
         flash('Command sent successfully!', category='success')
@@ -55,7 +57,7 @@ def bgp_manager_session():
     )
 
 
-@bgp_manager_bp.route('/get_neighbors', methods=['POST'])
+@bgp_manager_bp.route('/get_neighbors', methods=['GET', 'POST'])
 @login_required
 def get_neighbors():
     data = request.json

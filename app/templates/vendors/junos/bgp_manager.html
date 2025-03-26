@@ -5,7 +5,7 @@
 
 <hr>
 
-<form method="POST" action="{{ url_for('bgp_manager_bp.bgp_manager_session') }}" autocomplete="on">
+<form method="POST" action="{{ url_for('bgp_manager_bp.bgp_manager') }}" autocomplete="on">
     {{ form.hidden_tag() }}
 
     <div class="row mb-3">
@@ -70,9 +70,9 @@
                         neighborSelect.appendChild(option);
                     });
                 })
-                .catch(error => {
-                    alert("Erro ao carregar vizinhos. Tente novamente.");
-                });
+            .catch(error => {
+                alert("Erro ao carregar vizinhos. Tente novamente.");
+            });
         });
     });
 </script>
