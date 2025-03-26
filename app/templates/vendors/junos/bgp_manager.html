@@ -9,24 +9,40 @@
     {{ form.hidden_tag() }}
 
     <div class="row mb-3">
-        <div class="col">{{ form.hostname(class="form-control") }}</div>
+        <div class="col">
+            <div class="form-floating">
+                {{ form.hostname(class="form-control") }}
+                {{ form.hostname.label }}
+            </div>
+        </div>    </div>
+
+    <div class="row g-3 mb-3">
+        <div class="col-2">
+            <div class="form-floating">
+                {{ form.action(class="form-control") }}
+                {{ form.action.label }}
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-floating">
+                {{ form.group(class="form-control") }}
+                {{ form.group.label }}
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating">
+                {{ form.neighbor(class="form-control") }}
+                {{ form.neighbor.label }}
+            </div>
+        </div>
     </div>
-
-    <div class="row g-3">
-        <div class="col-2">{{ form.action(class="form-control") }}</div>
-        <div class="col-3">{{ form.group(class="form-control") }}</div>
-        <div class="col">{{ form.neighbor(class="form-control") }}</div>
-    </div>
-
-    <small class="text-muted">f'{action} protocols bgp group {group} neighbor {neighbor}'</small>
-
-    <br>
-
-    {{ form.submit(class="btn btn-primary mb-3 mt-3") }}
-
+    
+    {{ form.submit(class="btn btn-primary mb-3") }}
+    
 </form>
 
 
+<small class="text-muted">f'{action} protocols bgp group {group} neighbor {neighbor}'</small>
 <pre class="border border-3 rounded-3 p-3">{{ output }}</pre>
 
 <script>
