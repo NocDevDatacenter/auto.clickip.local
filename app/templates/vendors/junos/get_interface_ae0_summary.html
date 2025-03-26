@@ -8,15 +8,21 @@
 <form method="POST" action="{{ url_for('int_summary_bp.interface_summary') }}" autocomplete="on">
     {{ form.hidden_tag() }}
 
-    {{ form.hostname(class="form-select") }}
-    <small class="form-text text-muted d-block mb-3">
-        {{ form.hostname.description }}
-    </small>
-    {{ form.submit(class="btn btn-primary") }}
+    <div class="row mb-3">
+        <div class="col">
+            <div class="form-floating">
+                {{ form.hostname(class="form-control") }}
+                {{ form.hostname.label }}
+            </div>
+        </div>
+    </div>
 
+    {{ form.submit(class="btn btn-primary") }}
+    
 </form>
 
 <br>
 
+<small class="form-text text-muted d-block">{{ form.hostname.description }}</small>
 <pre class="border border-3 rounded-3 p-3">{{ output }}</pre>
 {% endblock %}
