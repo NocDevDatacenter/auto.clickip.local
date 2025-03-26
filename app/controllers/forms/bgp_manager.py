@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import SelectField, SubmitField
 
 
-class BgpManagerSessionForm(FlaskForm):
+class BgpManagerForm(FlaskForm):
     hostname = SelectField(
         'Hostname', choices=[]
     )
@@ -12,7 +12,7 @@ class BgpManagerSessionForm(FlaskForm):
             ('activate', 'activate'),
             ('deactivate', 'deactivate'),
         ],
-        default='deactivate'
+        default='activate'
     )
 
     group = SelectField(
@@ -20,11 +20,13 @@ class BgpManagerSessionForm(FlaskForm):
             ('Sessoes_Transito_IPv4', 'Sessoes_Transito_IPv4'),
             ('Sessoes_Transito_IPv6', 'Sessoes_Transito_IPv6'),
         ],
-        default='Sessoes_Transito_IPv6'
+        default='Sessoes_Transito_IPv4'
     )
 
     neighbor = SelectField(
         'Neighbor', choices=[]
     )
 
-    submit = SubmitField('Enviar')
+    submit = SubmitField(
+        'Commit',
+    )
