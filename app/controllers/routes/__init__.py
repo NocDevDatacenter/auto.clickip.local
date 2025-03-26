@@ -5,7 +5,7 @@ from .junos.interface_dhcp import int_dhcp_bp
 from .dmos.downstream_fec import downstream_fec_bp
 from .junos.get_interface_ae0_summary import int_summary_bp
 from .junos.interface_configuration import int_conf_bp
-from .junos.bgp_manager_session import bgp_manager_session_bp
+from .junos.bgp_manager import bgp_manager_bp
 from .junos.interface_static_router import int_static_route_bp
 
 
@@ -17,4 +17,4 @@ def register_blueprints(app: Flask):
     app.register_blueprint(int_summary_bp, url_prefix='/network')
     app.register_blueprint(downstream_fec_bp, url_prefix='/network')
     app.register_blueprint(int_static_route_bp, url_prefix='/network')
-    app.register_blueprint(bgp_manager_session_bp, url_prefix='/network')
+    app.register_blueprint(bgp_manager_bp, url_prefix='/network')

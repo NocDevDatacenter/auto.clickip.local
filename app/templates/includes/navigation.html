@@ -13,12 +13,15 @@
         <a href="#" class="dropdown-toggle mr-3" type="button" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">Routers</a>
         <div class="dropdown-menu">
-          <a href="{{ url_for('int_summary_bp.interface_summary') }}"class="dropdown-item">Interface Summary</a>
-          <a href="{{ url_for('int_conf_bp.interface_configuration') }}"class="dropdown-item">Interface Configuration</a>
-          <a href="{{ url_for('int_unit_bp.interface_unit') }}"class="dropdown-item">Config Interface Unit Vlan</a>
-          <a href="{{ url_for('int_static_route_bp.set_static_route_page') }}"class="dropdown-item">Config Static Router</a>
-          <a href="{{ url_for('int_dhcp_bp.set_access_address_assignment_page') }}"class="dropdown-item">Access Address Assignment</a>
-          <a href="{{ url_for('bgp_manager_session_bp.bgp_manager_session') }}"class="dropdown-item">BGP Manager Session</a>
+          <a href="{{ url_for('int_summary_bp.interface_summary') }}" class="dropdown-item">Interface Summary</a>
+          <a href="{{ url_for('int_conf_bp.interface_configuration') }}" class="dropdown-item">Interface
+            Configuration</a>
+          <a href="{{ url_for('int_unit_bp.interface_unit') }}" class="dropdown-item">Config Interface Unit Vlan</a>
+          <a href="{{ url_for('int_static_route_bp.set_static_route_page') }}" class="dropdown-item">Config Static
+            Router</a>
+          <a href="{{ url_for('int_dhcp_bp.set_access_address_assignment_page') }}" class="dropdown-item">Access Address
+            Assignment</a>
+          <a href="{{ url_for('bgp_manager_bp.bgp_manager_session') }}" class="dropdown-item">BGP Manager Session</a>
         </div>
       </li>
 

@@ -10,12 +10,12 @@ from flask_login import current_user, login_required, fresh_login_required
 load_dotenv()
 
 # Inicializa o Blueprint
-bgp_manager_session_bp = Blueprint('bgp_manager_session_bp', __name__)
+bgp_manager_bp = Blueprint('bgp_manager_bp', __name__)
 fernet_key = Fernet(os.getenv('MY_FERNET_KEY'))
 
 
-# Rota: bgp_manager_session_bp
-@bgp_manager_session_bp.route('/bgp_manager_session', methods=['GET', 'POST'])
+# Rota: bgp_manager_bp
+@bgp_manager_bp.route('/bgp_manager_session', methods=['GET', 'POST'])
 @login_required
 @fresh_login_required
 def bgp_manager_session():
@@ -49,13 +49,13 @@ def bgp_manager_session():
                     flash(f"Error in {field}: {error}", category='danger')
 
     return render_template(
-        'vendors/junos/bgp_manager_session.html',
+        'vendors/junos/bgp_manager.html',
         form=form,
         output=output,
     )
 
 
-@bgp_manager_session_bp.route('/get_neighbors', methods=['POST'])
+@bgp_manager_bp.route('/get_neighbors', methods=['POST'])
 @login_required
 def get_neighbors():
     data = request.json

@@ -5,24 +5,27 @@
 
 <hr>
 
-<form method="POST" action="{{ url_for('bgp_manager_session_bp.bgp_manager_session') }}" autocomplete="on">
+<form method="POST" action="{{ url_for('bgp_manager_bp.bgp_manager_session') }}" autocomplete="on">
     {{ form.hidden_tag() }}
 
     <div class="row mb-3">
         <div class="col">{{ form.hostname(class="form-control") }}</div>
     </div>
 
-    <div class="row g-3 mb-3">
+    <div class="row g-3">
         <div class="col-2">{{ form.action(class="form-control") }}</div>
         <div class="col-3">{{ form.group(class="form-control") }}</div>
         <div class="col">{{ form.neighbor(class="form-control") }}</div>
     </div>
 
-    {{ form.submit(class="btn btn-primary mb-3") }}
+    <small class="text-muted">f'{action} protocols bgp group {group} neighbor {neighbor}'</small>
+
+    <br>
+
+    {{ form.submit(class="btn btn-primary mb-3 mt-3") }}
 
 </form>
 
-<small class="text-muted">f'{action} protocols bgp group {group} neighbor {neighbor}'</small>
 
 <pre class="border border-3 rounded-3 p-3">{{ output }}</pre>
 
@@ -34,7 +37,7 @@
         groupSelect.addEventListener("change", function () {
             let selectedGroup = this.value;
 
-            fetch("{{ url_for('bgp_manager_session_bp.get_neighbors') }}", {
+            fetch("{{ url_for('bgp_manager_bp.get_neighbors') }}", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ group: selectedGroup })
