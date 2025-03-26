@@ -1,37 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="display-4">{% block title %}BGP Manager</h1>
-{% endblock %}
-
-{% block comment %}
-{{ super() }}
-{% endblock %}
+<h1>BGP Manager</h1>
 
 <hr>
 
 <form method="POST" action="{{ url_for('bgp_manager_session_bp.bgp_manager_session') }}" autocomplete="on">
     {{ form.hidden_tag() }}
 
-    <div class="form-row"><!-- bgp_manager_session.html -->
-        <div class="form-group col-2">{{ form.hostname(class="form-control") }}</div>
-        <div class="form-group col-3">{{ form.action(class="form-control") }}</div>
-        <div class="form-group col-3">{{ form.group(class="form-control") }}</div>
-        <div class="form-group col">{{ form.neighbor(class="form-control") }}</div>
+    <div class="row mb-3">
+        <div class="col">{{ form.hostname(class="form-control") }}</div>
     </div>
 
-    {{ form.submit(class="btn btn-primary") }}
+    <div class="row g-3 mb-3">
+        <div class="col-2">{{ form.action(class="form-control") }}</div>
+        <div class="col-3">{{ form.group(class="form-control") }}</div>
+        <div class="col">{{ form.neighbor(class="form-control") }}</div>
+    </div>
+
+    {{ form.submit(class="btn btn-primary mb-3") }}
 
 </form>
 
-<br>
+<small class="text-muted">f'{action} protocols bgp group {group} neighbor {neighbor}'</small>
 
-<pre class="text-center">{% raw %}f'{action} protocols bgp group {group} neighbor {neighbor}'{% endraw %}</pre>
+<pre class="border border-3 rounded-3 p-3">{{ output }}</pre>
 
-<pre class="max-height" style=" border: solid 1px rgba(0, 0, 0, .1); 
-                                    padding: 1rem; 
-                                    margin-top: 1rem; 
-                                    border-radius: 10px;">{{ output }}</pre>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         let groupSelect = document.getElementById("group");
