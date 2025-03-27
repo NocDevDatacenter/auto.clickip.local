@@ -8,7 +8,7 @@ def read_requirements():
 
 setup(
     name="auto_clickip",
-    version="0.2.0",
+    version="0.1.0",
     description="Aplicação Flask para automação de redes",
     author="Fábio Ewerton",
     author_email="fabioew89@gmail.com",
