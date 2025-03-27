@@ -1,3 +1,19 @@
+## v0.11.0 (2025-03-27)
+
+### Feat
+
+- **/app/config.py**: env_path to ensure load env
+
+### Fix
+
+- change bgp_manager_session name to bgp_manager
+- del bgp_manager.py of the __init__.py
+- upt form bgp_manager
+- upt bgp_manager.html
+- changed name bgp_manager_session.xyz to bgp_manager.xyz
+
+## v0.1.0 (2025-03-25)
+
 ## v0.10.1 (2025-03-25)
 
 ### Fix

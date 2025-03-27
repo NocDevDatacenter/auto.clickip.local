@@ -1,5 +1,5 @@
 [tool.commitizen]
-version = "0.10.1"
+version = "0.11.0"
 tag_format = "v$version"
 name = "cz_conventional_commits"
 version_scheme = "pep440"
