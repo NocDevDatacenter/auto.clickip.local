@@ -48,32 +48,42 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        let groupSelect = document.getElementById("group");
-        let neighborSelect = document.getElementById("neighbor");
+        const groupSelect = document.getElementById("group");
+        const neighborSelect = document.getElementById("neighbor");
 
-        groupSelect.addEventListener("change", function () {
-            let selectedGroup = this.value;
-
+        // Função reutilizável para carregar neighbors
+        const loadNeighbors = (group) => {
             fetch("{{ url_for('bgp_manager_bp.get_neighbors') }}", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ group: selectedGroup })
+                body: JSON.stringify({ group })
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log("📡:", data);
-                    neighborSelect.innerHTML = "<option value=''>Chose a Neighbor</option>";
+                    neighborSelect.innerHTML = '<option value="">Selecione um Neighbor</option>';
                     data.forEach(item => {
-                        let option = document.createElement("option");
-                        option.value = item.neighbor;
-                        option.textContent = item.description;
-                        neighborSelect.appendChild(option);
+                        neighborSelect.innerHTML += `<option value="${item.neighbor}">${item.description}</option>`;
                     });
-                })
-            .catch(error => {
-                alert("Erro ao carregar vizinhos. Tente novamente.");
-            });
-        });
+                });
+        };
+
+        // Carrega neighbors ao mudar grupo
+        groupSelect.addEventListener("change", () => loadNeighbors(groupSelect.value));
+
+        // --- Carrega automaticamente ao iniciar ---
+        if (groupSelect.value) loadNeighbors(groupSelect.value); // Se grupo já estiver selecionado
+        else if (groupSelect.options.length > 0) { // Se houver opções, usa a primeira
+            groupSelect.value = groupSelect.options[0].value;
+            loadNeighbors(groupSelect.value);
+        }
+    });
+    
+    // Validação antes do submit
+    document.querySelector("form").addEventListener("submit", function (e) {
+        if (!neighborSelect.value) {
+            e.preventDefault(); // Impede o envio
+            alert("Selecione um neighbor válido!");
+        }
     });
 </script>
 {% endblock %}
