@@ -1,3 +1,17 @@
+## v0.12.0 (2025-03-27)
+
+### Feat
+
+- **netmiko/junos/bgp_manager.py**: done, finally finished function to deactivate and activate neighbor in bgp protocol
+
+### Fix
+
+- **bgp_manager.html**: script upt to refresh data with ajax
+- **bgp_manager.py**: finally configured to work with bgp manager
+- **footer.html**: not implemented yet
+- **main.js**: its not necessary
+- **setup.py**: upt version to 0.1.0
+
 ## v0.11.0 (2025-03-27)
 
 ### Feat
