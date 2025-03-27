@@ -6,6 +6,7 @@ from app.controllers.forms.bgp_manager import BgpManagerForm
 from app.models import Routers, NeighborBgpIpv4, NeighborBgpIpv6
 from flask import Blueprint, request, render_template, flash, jsonify
 from flask_login import current_user, login_required, fresh_login_required
+from app.controllers.netmiko.junos.bgp_manager import bgp_manager as bgp
 
 load_dotenv()
 
@@ -24,22 +25,27 @@ def bgp_manager():
     form.hostname.choices = [(host.ip_address, host.hostname) for host in hosts]
     current_user_decrypted_password = fernet_key.decrypt(current_user.password).decode('utf-8')
 
-    output = None
-
-    if form.validate_on_submit():
-
+    # Atualiza as choices do neighbor baseado no grupo recebido
+    if form.group.data:
         if form.group.data == 'Sessoes_Transito_IPv4':
             neighbors = db.session.execute(db.select(NeighborBgpIpv4).order_by(NeighborBgpIpv4.id)).scalars().all()
         else:
             neighbors = db.session.execute(db.select(NeighborBgpIpv6).order_by(NeighborBgpIpv6.id)).scalars().all()
 
-        output = bgp_manager(
+    # Atualiza as opções do campo neighbor
+    form.neighbor.choices = [(n.neighbor, n.description) for n in neighbors]
+
+    output = None
+
+    if form.validate_on_submit():
+
+        output = bgp(
             hostname=form.hostname.data,
             username=current_user.username,
             password=current_user_decrypted_password,
             action=form.action.data,
             group=form.group.data,
-            neighbor=neighbors
+            neighbor=form.neighbor.data
         )
 
         flash('Command sent successfully!', category='success')
