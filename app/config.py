@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 
 # Load environment variables from a .env file (if present).
 # Used for sensitive or environment-specific configurations (e.g., API keys, database URIs).
-load_dotenv()
+env_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path=env_path, override=True)
 
 # Default port for the Flask development server.
 # Can be overridden by environment variables or deployment settings (e.g., Heroku uses PORT env var).
@@ -28,7 +29,6 @@ SECRET_KEY = os.getenv('SQLALCHEMY_SECRET_KEY')
 # False: Disabled (default for production).
 WEB_RELOADER = False
 
-## Netmiko Connection Parameters
 # SSH port for connecting to the device (default is 22)
 NETMIKO_PORT = 22
 
