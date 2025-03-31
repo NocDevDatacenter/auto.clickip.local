@@ -184,20 +184,21 @@
                 </a>
             </li>
             <li>
-                <a href="{{ url_for('int_unit_bp.interface_unit') }}">
+                <a href="{{ url_for('int_unit_bp.interface_unit') }}" hidden>
                     <i class="fa fa-gear"></i>Set Interface Unit Vlan
                 </a>
             </li>
             <li>
-                <a href="{{ url_for('int_static_route_bp.set_static_route_page') }}">
+                <a href="{{ url_for('int_static_route_bp.set_static_route_page') }}" hidden>
                     <i class="fa fa-gear"></i>Set Static Router
                 </a>
             </li>
             <li>
-                <a href="{{ url_for('int_dhcp_bp.set_access_address_assignment_page') }}">
+                <a href="{{ url_for('int_dhcp_bp.set_access_address_assignment_page') }}" hidden>
                     <i class="fa fa-gear"></i>Set Access Address Assignment
                 </a>
             </li>
+            <hr>
             <li>
                 <a href="{{ url_for('bgp_manager_bp.bgp_manager') }}">
                     <i class="fa fa-gear"></i>BGP Manager Session
