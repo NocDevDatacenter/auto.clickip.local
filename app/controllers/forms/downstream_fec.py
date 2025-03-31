@@ -33,7 +33,7 @@ class Downstream_fec_form(FlaskForm):
             ('no downstream-fec', 'no downstream-fec'),
             ('downstream-fec', 'downstream-fec'),
         ],
-        default='no downstream-fec'
+        default='downstream-fec'
     )
 
     submit = SubmitField('Commit')
