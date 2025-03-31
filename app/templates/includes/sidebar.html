@@ -1,78 +1,163 @@
 <style>
-    body {
-        font-family: "Lato", sans-serif;
+    /* ===== VARIÁVEIS ===== */
+    :root {
+        --sidebar-width: 20rem;
+        --primary-bg: #111;
+        --text-color: lightgray;
+        --accent-color: lightblue;
+        --icon-spacing: 0.5rem;
+        --transition-speed: 0.5s;
+
     }
 
+    /* ===== BASE ===== */
+    body {
+        font-family: "Lato", sans-serif;
+        margin: 0;
+    }
+
+    /* ===== SIDEBAR PRINCIPAL ===== */
     .sidebar {
         height: 100vh;
-        width: 20rem;
+        width: var(--sidebar-width);
         position: fixed;
         top: 0;
         left: 0;
         padding: 1rem;
-        background-color: #111;
-        z-index: 1;
+        background-color: var(--primary-bg);
+        z-index: 100;
         display: flex;
         flex-direction: column;
     }
 
+    /* ===== CABEÇALHO ===== */
     .sidebar .site-header {
-        font-size: 18pt;
+        font-size: 1.5rem;
         text-align: center;
         text-decoration: none;
         text-transform: uppercase;
-
-        h3 {
-            margin: 1rem 0;
-            font-size: 18pt;
-        }
-
-        &:hover {
-            color: lightblue;
-            text-decoration: underline;
-        }
-
+        color: var(--text-color);
     }
 
-    .fa-home,
-    .fa-server {
-        margin-bottom: .5rem;
+    .sidebar .site-header h3 {
+        margin: 1rem 0;
+        font-size: inherit;
     }
 
-    h3,
-    hr,
+    .sidebar .site-header:hover {
+        color: var(--accent-color);
+        text-decoration: underline;
+    }
+
+    /* ===== NAVEGAÇÃO ===== */
+    .sidenav {
+        flex: 1;
+    }
+
+    .sidenav ul {
+        border-left: 1px solid var(--text-color);
+        list-style-type: none;
+    }
+
+    .sidenav ul li {
+        margin-left: -1.5rem;
+    }
+
+
     .sidenav a {
         display: block;
-        font-size: 14pt;
-        color: lightgray;
         text-decoration: none;
+        color: var(--text-color);
+        transition: var(--transition-speed) ease
+    }
 
-        &:hover {
-            color: lightblue;
-            text-decoration: underline;
-        }
+    .sidenav a:hover {
+        color: var(--text-color);
+        text-decoration: underline;
+        margin-left: .5rem;
+        color: var(--accent-color);
     }
 
     .sidenav i {
-        margin-right: .5rem;
+        margin-right: var(--icon-spacing);
+        width: 1.25rem;
+        text-align: center;
     }
 
+
+    /* Ícones específicos */
+    .fa-home,
+    .fa-server {
+        margin-bottom: var(--icon-spacing);
+    }
+
+    /* ===== SEÇÕES COLAPSÁVEIS ===== */
     #OLTs,
     #Routers {
-        margin-left: .5rem;
+        margin-left: var(--icon-spacing);
     }
 
     #OLTs a,
     #Routers a {
-        font-size: 12pt;
+        font-size: 1rem;
     }
 
+    /* ===== CONTROLES DA SIDEBAR ===== */
+    .sidebar .closebtn {
+        position: absolute;
+        top: 0;
+        right: -3rem;
+        font-size: 36pt;
+        color: var(--text-color);
+        cursor: pointer;
+        line-height: 1;
+        text-decoration: none;
+        background-color: var(--primary-bg);
+        height: 3rem;
+        width: 3rem;
+        text-align: center;
+    }
+
+    .sidebar .closebtn:hover {
+        color: var(--accent-color);
+    }
+
+    .openbtn {
+        font-size: 1.25rem;
+        /* 20px */
+        cursor: pointer;
+        background-color: var(--primary-bg);
+        color: white;
+        padding: 0.625rem 0.9375rem;
+        /* 10px 15px */
+        border: none;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 90;
+    }
+
+    .openbtn:hover {
+        background-color: #444;
+    }
+
+    /* ===== ÁREA DO USUÁRIO ===== */
     .sidebar .dropdown-container {
         margin-top: auto;
     }
+
+    /* ===== ELEMENTOS GERAIS ===== */
+    hr {
+        border-color: #333;
+        margin: 1rem 0;
+    }
 </style>
 
-<aside class="sidebar"><!-- sidebar -->
+<aside id="mySidebar" class="sidebar"><!-- sidebar -->
+
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">
+        &times;
+    </a>
 
     <a href="/" class="site-header">
         <h3>auto.clickip.local</h3>
@@ -87,26 +172,38 @@
             <i class="fa fa-server"></i>Router
         </a><!-- toggle -->
 
-        <div class="collapse show" id="Routers"><!-- collapse -->
-            <a href="{{ url_for('int_summary_bp.interface_summary') }}">
-                <i class="fa fa-gear"></i>Get Summary
-            </a>
-            <a href="{{ url_for('int_conf_bp.interface_configuration') }}">
-                <i class="fa fa-gear"></i>Get Interface Configuration
-            </a>
-            <a href="{{ url_for('int_unit_bp.interface_unit') }}">
-                <i class="fa fa-gear"></i>Set Interface Unit Vlan
-            </a>
-            <a href="{{ url_for('int_static_route_bp.set_static_route_page') }}">
-                <i class="fa fa-gear"></i>Set Static Router
-            </a>
-            <a href="{{ url_for('int_dhcp_bp.set_access_address_assignment_page') }}">
-                <i class="fa fa-gear"></i>Set Access Address Assignment
-            </a>
-            <a href="{{ url_for('bgp_manager_bp.bgp_manager') }}">
-                <i class="fa fa-gear"></i>BGP Manager Session
-            </a>
-        </div><!-- collapse -->
+        <ul class="collapse show" id="Routers"><!-- collapse -->
+            <li>
+                <a href="{{ url_for('int_summary_bp.interface_summary') }}">
+                    <i class="fa fa-gear"></i>Get Summary
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('int_conf_bp.interface_configuration') }}">
+                    <i class="fa fa-gear"></i>Get Interface Configuration
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('int_unit_bp.interface_unit') }}">
+                    <i class="fa fa-gear"></i>Set Interface Unit Vlan
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('int_static_route_bp.set_static_route_page') }}">
+                    <i class="fa fa-gear"></i>Set Static Router
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('int_dhcp_bp.set_access_address_assignment_page') }}">
+                    <i class="fa fa-gear"></i>Set Access Address Assignment
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('bgp_manager_bp.bgp_manager') }}">
+                    <i class="fa fa-gear"></i>BGP Manager Session
+                </a>
+            </li>
+        </ul><!-- collapse -->
 
         <a href="#" data-bs-toggle="collapse" role="button">
             <i class="fa fa-server"></i>OLTs
@@ -147,3 +244,15 @@
         </div>
     </div>
 </aside>
+
+<button id="main" class="openbtn" onclick="openNav()">☰</button>
+
+<script>
+    function openNav() {
+        document.getElementById("mySidebar").style.display = 'flex';
+    }
+
+    function closeNav() {
+        document.getElementById("mySidebar").style.display = "none";
+    }
+</script>
