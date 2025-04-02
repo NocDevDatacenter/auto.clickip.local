@@ -10,11 +10,10 @@ load_dotenv()
 # Initialize Fernet encryption using the key stored in environment variables
 fernet_key = Fernet(os.getenv('MY_FERNET_KEY'))
 
-# Create the Flask application instance
-app = create_app()
-
 
 def ensure_admin():
+    app = create_app()
+
     """Ensure that an admin user exists in the database."""
     with app.app_context():
         # Retrieve admin credentials from environment variables
@@ -32,7 +31,8 @@ def ensure_admin():
         if not auto_noc:
             auto_noc = Users(
                 username=admin_username,
-                password=fernet_key.encrypt(admin_password.encode('utf-8')),  # Encrypt the password
+                password=fernet_key.encrypt(admin_password.encode('utf-8')),
+                is_admin=True,
             )
             db.session.add(auto_noc)
             db.session.commit()
