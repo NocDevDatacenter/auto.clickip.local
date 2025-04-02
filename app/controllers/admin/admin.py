@@ -2,6 +2,8 @@ import os
 from app import db, admin
 from flask import url_for
 from dotenv import load_dotenv
+from flask import url_for, redirect
+from flask_login import current_user
 from flask_admin.menu import MenuLink
 from cryptography.fernet import Fernet
 from flask_admin.contrib.sqla import ModelView
@@ -13,6 +15,12 @@ load_dotenv()
 
 
 class UsersView(ModelView):
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.is_admin
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for('auth_bp.login'))
+
     can_edit = True
     can_delete = False
     can_create = True
@@ -21,7 +29,7 @@ class UsersView(ModelView):
     edit_modal = True
     details_modal = True
 
-    can_view_details = False
+    can_view_details = True
     can_set_page_size = True
 
     column_default_sort = 'username'
@@ -65,7 +73,7 @@ class RoutersView(ModelView):
     edit_modal = True
     details_modal = True
 
-    can_view_details = False
+    can_view_details = True
     can_set_page_size = True
 
     column_default_sort = 'hostname'
@@ -89,7 +97,7 @@ class SwitchView(ModelView):
     edit_modal = True
     details_modal = True
 
-    can_view_details = False
+    can_view_details = True
     can_set_page_size = True
 
     column_default_sort = 'hostname'
@@ -113,7 +121,7 @@ class OltView(ModelView):
     edit_modal = True
     details_modal = True
 
-    can_view_details = False
+    can_view_details = True
     can_set_page_size = True
 
     column_default_sort = 'hostname'
@@ -137,7 +145,7 @@ class BgpNeighborIpv4View(ModelView):
     edit_modal = True
     details_modal = True
 
-    can_view_details = False
+    can_view_details = True
     can_set_page_size = True
 
     column_default_sort = 'description'
@@ -146,7 +154,7 @@ class BgpNeighborIpv4View(ModelView):
         'neighbor': StringField(
             'Neighbor', validators=[
                 InputRequired(),
-                IPAddress(ipv4=True, ipv6=True)
+                IPAddress(ipv4=True)
             ]
         ),
     }
@@ -161,7 +169,7 @@ class BgpNeighborIpv6View(ModelView):
     edit_modal = True
     details_modal = True
 
-    can_view_details = False
+    can_view_details = True
     can_set_page_size = True
 
     column_default_sort = 'description'
@@ -170,15 +178,22 @@ class BgpNeighborIpv6View(ModelView):
         'neighbor': StringField(
             'Neighbor', validators=[
                 InputRequired(),
-                IPAddress(ipv4=True, ipv6=True)
+                IPAddress(ipv6=True)
             ]
         ),
     }
 
 
+class LogoutLink(MenuLink):
+    def get_url(self):
+        return url_for('auth_bp.logout')
+
+
 def flask_admin():
     admin.name = 'auto.clickip.local'
+
     admin.add_view(UsersView(Users, db.session))
+    admin.add_view(OltView(Olts, db.session, name='OLTs', category='Ativos'))
     admin.add_view(RoutersView(Routers, db.session, category='Ativos'))
     admin.add_view(SwitchView(Switches, db.session, category='Ativos'))
     admin.add_view(OltView(Olts, db.session, category='Ativos'))
