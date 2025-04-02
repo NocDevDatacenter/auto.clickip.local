@@ -2,11 +2,8 @@ VENV=.venv
 PYTHON=$(VENV)/bin/python
 PIP=$(VENV)/bin/pip
 
-.PHONY: venv
-.PHONY: install
-.PHONY: run
-.PHONY: clean
-.PHONY: flake
+.PHONY: venv install run clean flake
+.PHONY: mig init status reset upgrade downgrade
 
 venv:
 	@python3 -m venv $(VENV)
@@ -31,3 +28,21 @@ clean:
 flake:
 	@echo 'Checking flake8...'
 	@flake8 --exclude $(VENV)
+
+migrate:
+	flask db current
+	flask db migrate -m "automatic migration"
+	flask db upgrade
+	
+init:
+	flask db init
+
+status:
+	flask db current
+	flask db history
+
+reset:
+	rm -rf migrations/
+	flask db init
+	flask db migrate -m "initial migration after reset"
+	flask db upgrade
