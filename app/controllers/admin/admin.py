@@ -1,6 +1,8 @@
 import os
 from app import db, admin
+from flask import url_for
 from dotenv import load_dotenv
+from flask_admin.menu import MenuLink
 from cryptography.fernet import Fernet
 from flask_admin.contrib.sqla import ModelView
 from wtforms import StringField, PasswordField
@@ -12,14 +14,14 @@ load_dotenv()
 
 class UsersView(ModelView):
     can_edit = True
-    can_delete = True
+    can_delete = False
     can_create = True
     can_export = True
 
     edit_modal = True
     details_modal = True
 
-    can_view_details = True
+    can_view_details = False
     can_set_page_size = True
 
     column_default_sort = 'username'
@@ -56,14 +58,14 @@ class UsersView(ModelView):
 
 class RoutersView(ModelView):
     can_edit = True
-    can_delete = True
+    can_delete = False
     can_create = True
     can_export = True
 
     edit_modal = True
     details_modal = True
 
-    can_view_details = True
+    can_view_details = False
     can_set_page_size = True
 
     column_default_sort = 'hostname'
@@ -80,14 +82,14 @@ class RoutersView(ModelView):
 
 class SwitchView(ModelView):
     can_edit = True
-    can_delete = True
+    can_delete = False
     can_create = True
     can_export = True
 
     edit_modal = True
     details_modal = True
 
-    can_view_details = True
+    can_view_details = False
     can_set_page_size = True
 
     column_default_sort = 'hostname'
@@ -104,14 +106,14 @@ class SwitchView(ModelView):
 
 class OltView(ModelView):
     can_edit = True
-    can_delete = True
+    can_delete = False
     can_create = True
     can_export = True
 
     edit_modal = True
     details_modal = True
 
-    can_view_details = True
+    can_view_details = False
     can_set_page_size = True
 
     column_default_sort = 'hostname'
@@ -128,14 +130,14 @@ class OltView(ModelView):
 
 class BgpNeighborIpv4View(ModelView):
     can_edit = True
-    can_delete = True
+    can_delete = False
     can_create = True
     can_export = True
 
     edit_modal = True
     details_modal = True
 
-    can_view_details = True
+    can_view_details = False
     can_set_page_size = True
 
     column_default_sort = 'description'
@@ -152,14 +154,14 @@ class BgpNeighborIpv4View(ModelView):
 
 class BgpNeighborIpv6View(ModelView):
     can_edit = True
-    can_delete = True
+    can_delete = False
     can_create = True
     can_export = True
 
     edit_modal = True
     details_modal = True
 
-    can_view_details = True
+    can_view_details = False
     can_set_page_size = True
 
     column_default_sort = 'description'
@@ -177,8 +179,14 @@ class BgpNeighborIpv6View(ModelView):
 def flask_admin():
     admin.name = 'auto.clickip.local'
     admin.add_view(UsersView(Users, db.session))
-    admin.add_view(RoutersView(Routers, db.session))
-    admin.add_view(SwitchView(Switches, db.session))
-    admin.add_view(OltView(Olts, db.session))
-    admin.add_view(BgpNeighborIpv4View(NeighborBgpIpv4, db.session))
-    admin.add_view(BgpNeighborIpv6View(NeighborBgpIpv6, db.session))
+    admin.add_view(RoutersView(Routers, db.session, category='Ativos'))
+    admin.add_view(SwitchView(Switches, db.session, category='Ativos'))
+    admin.add_view(OltView(Olts, db.session, category='Ativos'))
+    admin.add_view(BgpNeighborIpv4View(NeighborBgpIpv4, db.session, category='Neighbor'))
+    admin.add_view(BgpNeighborIpv6View(NeighborBgpIpv6, db.session, category='Neighbor'))
+
+    class LogoutLink(MenuLink):
+        def get_url(self):
+            return url_for('auth_bp.logout')
+
+    admin.add_link(LogoutLink(name='Logout', category=''))
