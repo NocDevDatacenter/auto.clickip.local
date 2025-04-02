@@ -1,3 +1,29 @@
+## v0.13.0 (2025-04-02)
+
+### Feat
+
+- **app/controllers/admin/admin.py**: add new feature, fileadmin like uploads in admin painel
+- **app/templates/includes/sidebar.html**: add a button to close and open sidebar
+
+### Fix
+
+- **app/controllers/admin/admin.py**: add logout button in top header flask_admin
+- **app/templates/admin/index.html**: refactored /admin/index.html
+- **app/controllers/admin/admin.py**: add new menu link, logout
+- **app/models/__init__.py**: add is_admin = db.Column(db.Boolean, default=False)
+- **app/templates/admin/index.html**: del <li><a href="/admin/users/">Users</a></li>
+- **app/controllers/routes/auth/__init__.py**: redirect return to interface_summary
+- **app/templates/vendors/dmos/downstream_fec.html**: add endpoint in action form
+- **app/templates/includes/sidebar.html**: hidden menu items
+- adjusted get config to bs5
+- **app/controllers/forms/get_interface_ae0_summary.py**: delete enpty spaces
+- **livereloader.py**: upt livereloader.py
+- **base.html**: remove class container of the tag main
+
+### Refactor
+
+- ****/*/downstream_fec.***: refact downstream_fec
+
 ## v0.12.0 (2025-03-27)
 
 ### Feat
