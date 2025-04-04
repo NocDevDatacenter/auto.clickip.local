@@ -1,3 +1,9 @@
+## v0.15.0 (2025-04-04)
+
+### Feat
+
+- **app/__init__.py**: upt with bootstrap4 in flask-admin
+
 ## v0.14.0 (2025-04-04)
 
 ### Feat

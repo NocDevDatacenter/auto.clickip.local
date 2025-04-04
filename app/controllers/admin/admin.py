@@ -83,6 +83,18 @@ class DeviceView(ModelView):
     }
 
 
+class OltView(DeviceView):
+    column_labels = dict(hostname='Hostname - OLTs')
+
+
+class RouterView(DeviceView):
+    column_labels = dict(hostname='Hostname - Router')
+
+
+class SwitchView(DeviceView):
+    column_labels = dict(hostname='Hostname - Switch')
+
+
 class BgpNeighborView(DeviceView):
     column_default_sort = 'description'
     column_searchable_list = column_filters = column_editable_list = ['description', 'neighbor']
@@ -118,25 +130,36 @@ class LogoutLink(MenuLink):
 
 
 class UploadsFileAdmin(FileAdmin):
-    can_upload = can_delete = can_delete_dirs = True
-    can_mkdir = can_rename = True
+    def is_accessible(self):
+        return current_user.is_authenticated
 
-    allowed_extensions = None
-    editable_extensions = ()
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for('auth_bp.login'))
+
+    # permissions
+    can_upload = can_download = can_delete = True
+    can_mkdir = can_rename = True
+    can_delete_dirs = False
+
+    # config files
+    allowed_extensions = editable_extensions = ('txt', 'csv')
+    max_file_size = 10 * 1024 * 1024  # 10MB
 
 
 def flask_admin():
     admin.name = 'auto.clickip.local'
+    admin.base_path = os.path.join(os.path.dirname(__file__), 'static')
+    admin.base_url = '/static/'
 
     admin.add_view(UserView(Users, db.session))
 
-    admin.add_view(DeviceView(Olts, db.session, name='OLTs', category='Ativos'))
-    admin.add_view(DeviceView(Routers, db.session, category='Ativos'))
-    admin.add_view(DeviceView(Switches, db.session, category='Ativos'))
+    admin.add_view(OltView(Olts, db.session, name='OLTs', category='Ativos'))
+    admin.add_view(RouterView(Routers, db.session, category='Ativos'))
+    admin.add_view(SwitchView(Switches, db.session, category='Ativos'))
 
     admin.add_view(BgpNeighborIpv4View(NeighborBgpIpv4, db.session, category='Neighbor'))
     admin.add_view(BgpNeighborIpv6View(NeighborBgpIpv6, db.session, category='Neighbor'))
 
-    admin.add_view(UploadsFileAdmin(path, '/static/', name='Uploads'))
+    admin.add_view(UploadsFileAdmin(base_path=admin.base_path, name='Uploads'))
 
     admin.add_link(LogoutLink(name='Logout', category=''))
