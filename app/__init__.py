@@ -13,10 +13,10 @@ class Base(DeclarativeBase):
 
 
 # Initializing Flask extensions
-db = SQLAlchemy(model_class=Base)  # Manages database interactions
-lm = LoginManager()                # Manages user sessions and authentication
-admin = Admin()                    # Administrative interface for managing the application
-migrate = Migrate()                # Manages database migrations
+db = SQLAlchemy(model_class=Base)           # Manages database interactions
+lm = LoginManager()                         # Manages user sessions and authentication
+admin = Admin(template_mode='bootstrap4')   # Administrative interface for managing the application
+migrate = Migrate()                         # Manages database migrations
 
 
 def create_app():
