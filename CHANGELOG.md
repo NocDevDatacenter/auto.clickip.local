@@ -1,3 +1,15 @@
+## v0.14.0 (2025-04-04)
+
+### Feat
+
+- **app/controllers/admin/admin.py**: refact admin.py
+- **Makefile**: new functions in Makefile, add flask-migrate
+
+### Fix
+
+- **create_admin.py**: upt add new field in create_admin, is_admin=True
+- add just a .gitkeep
+
 ## v0.13.0 (2025-04-02)
 
 ### Feat
