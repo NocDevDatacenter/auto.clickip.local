@@ -5,19 +5,27 @@ PIP=$(VENV)/bin/pip
 .PHONY: venv install run clean flake
 .PHONY: mig init status reset upgrade downgrade
 
+################### ################### ################### ################### ################### 
+#### DEPLOYMENT ### #### DEPLOYMENT ### #### DEPLOYMENT ### #### DEPLOYMENT ### #### DEPLOYMENT ### 
+################### ################### ################### ################### ################### 
+
 venv:
-	@python3 -m venv $(VENV)
-	@$(PIP) install --upgrade pip > /dev/null
-	@echo "Pip updated."
-	@echo "Virtual environment created in $(VENV)"
+	@if [ ! -d "$(VENV)" ]; then \
+		echo "Creating virtual environment..."; \
+		python3 -m venv $(VENV); \
+		$(PIP) install --upgrade pip > /dev/null; \
+		echo "Pip updated."; \
+	else \
+		echo "Virtual environment already exists."; \
+	fi
+	@sleep 5
 
 install: venv
-	@$(PIP) install -r requirements.txt  --no-cache-dir
 	@echo "Dependencies installed."
+	@$(PIP) install -r requirements.txt  --no-cache-dir > /dev/null
 
 run:
-	@PYTHONDONTWRITEBYTECODE=1 FLASK_ENV=development FLASK_APP=run.py $(PYTHON) -m flask run --debug --reload
-	@echo "Application is running."
+	@export PYTHONDONTWRITEBYTECODE=1 FLASK_APP=run.py && $(PYTHON) -m flask run --debug --host=0.0.0.0
 
 clean:
 	@find . -type d \( -name "__pycache__" -o -name ".pytest_cache" \) -exec rm -rf {} +
@@ -25,24 +33,36 @@ clean:
 	@rm -rf $(VENV)
 	@echo "Cache and $(VENV) successfully removed."
 
+################### ################### ################### ################### ################### 
+###### FLAKE ###### ###### FLAKE ###### ###### FLAKE ###### ###### FLAKE ###### ###### FLAKE ###### 
+################### ################### ################### ################### ################### 
+
 flake:
 	@echo 'Checking flake8...'
-	@flake8 --exclude $(VENV)
+	@$(PYTHON) -m flake8 --exclude $(VENV)
+
+################### ################### ################### ################### ################### 
+##### MIGRATE ##### ##### MIGRATE ##### ##### MIGRATE ##### ##### MIGRATE ##### ##### MIGRATE ##### 
+################### ################### ################### ################### ################### 
 
 migrate:
-	flask db current
-	flask db migrate -m "automatic migration"
-	flask db upgrade
+	@$(PYTHON) -m flask db current
+	@$(PYTHON) -m flask db migrate -m "automatic migration"
+	@$(PYTHON) -m flask db upgrade
 	
-init:
-	flask db init
+mig-init:
+	@$(PYTHON) -m flask db init
 
-status:
-	flask db current
-	flask db history
+mig-status:
+	@$(PYTHON) -m flask db current
+	@$(PYTHON) -m flask db history
 
-reset:
+mig-reset:
 	rm -rf migrations/
-	flask db init
-	flask db migrate -m "initial migration after reset"
-	flask db upgrade
+	@$(PYTHON) -m flask db init
+	@$(PYTHON) -m flask db migrate -m "initial migration after reset"
+	@$(PYTHON) -m flask db upgrade
+
+################### ################### ################### ################### ################### 
+##### ENDLINE ##### ##### ENDLINE ##### ##### ENDLINE ##### ##### ENDLINE ##### ##### ENDLINE ##### 
+################### ################### ################### ################### ################### 
